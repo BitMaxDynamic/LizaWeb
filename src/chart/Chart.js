@@ -3,7 +3,8 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-import  {LineChart} from 'react-d3-basic';
+// import  {LineChart} from 'react-d3-basic';
+import {LineTooltip} from 'react-d3-tooltip';
 
 class Chart extends React.Component {
 
@@ -32,9 +33,9 @@ class Chart extends React.Component {
         return (
             <div>
                 <h1>H1 Header {this.props.text}</h1>
-                <LineChart
-                    width={600}
-                    height={300}
+                <LineTooltip
+                    width={1000}
+                    height={500}
                     data={generalChartData}
                     chartSeries={chartSeries}
                     x={this.x}
