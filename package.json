@@ -11,12 +11,14 @@
     "font-awesome": "^4.7.0",
     "jquery": "^3.1.1",
     "morgan": "^1.7.0",
+    "path": "^0.12.7",
     "prop-types": "^15.5.8",
     "react": "^15.5.4",
     "react-d3": "^0.4.0",
     "react-d3-basic": "^1.6.11",
     "react-d3-tooltip": "^1.4.14",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "react-router": "^4.1.1"
   },
   "devDependencies": {
     "react-scripts": "0.9.5"

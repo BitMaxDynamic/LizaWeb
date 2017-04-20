@@ -11,8 +11,12 @@ var request = require('request');
 var zlib = require('zlib');
 var app = express();
 var querystring = require('querystring');
+var server = require('react-dom/server'); // { renderToString } ;
+var router = require('react-router') ;// import { match, RouterContext } from 'react-router';
+
+app.set('view engine', 'ejs');
 app.set('port', (process.env.PORT || 3000));
-app.use('/', express.static(__dirname + './../../dist'));
+app.use('/', express.static(__dirname + './../../build'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'));
@@ -49,7 +53,7 @@ app.get('/get_btc_test', function(req, res) {
 // all other routes are handled by Angular
 app.get('/*', function(req, res) {
   res.sendFile(path.join(__dirname,'./../../build/index.html'));
-    res.sendFile(path.join(__dirname,'./../../build/favicon.ico'));
+    // return res.render('index', { markup });
 });
 
 app.listen(app.get('port'), function() {
