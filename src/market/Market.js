@@ -1,38 +1,29 @@
 /**
  * Created by ilya on 20/04/2017.
  */
-import React, { Component } from 'react';
+import React from 'react';
+// import PropTypes from 'prop-types';
 import Chart from '../chart/Chart';
-// import axios from 'axios';
 
-class Market extends Component {
+export const BASE_PUBLIC = '/public/api/v1/';
+class Market extends React.Component {
 
-    constructor() {
-        super();
-        this.state = {
-            apiLink: ["get_btce"],
-            data: [],
-            errorMessage: '',
-            serverResponse: ''
-        };
-    }
-
-    componentWillMount(){
-        console.log("debug here before fetches");
-        this.getApiData();
-        console.log("debug here after fetches");
-    }
     
     render() {
         return (
             <div >
-                <Chart text="example_props" data=""/>
+                <Chart
+                    data={BASE_PUBLIC.concat('currency/bitstamp')}
+                    field_x='date' field_y="price"
+                    title='Bitstamp bitcoin' />
+                {/*<Chart*/}
+                    {/*data='/src/data/user.json'*/}
+                    {/*field_x='date' field_y="price"*/}
+                    {/*title='Bitstamp bitcoin' />*/}
             </div>
         );
     }
-    getApiData(data){
 
-    }
 }
 
 export default Market;

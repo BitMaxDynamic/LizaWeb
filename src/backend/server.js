@@ -2,18 +2,18 @@
  * Created by ilya shusterman on 31/03/2017.
  */
 //imports
-var express = require('express');
-var path = require('path');
-var morgan = require('morgan'); // logger
-var bodyParser = require('body-parser');
-var session = require('express-session');
-var fs = require('fs');
-var request = require('request');
-var zlib = require('zlib');
-var app = express();
-var querystring = require('querystring');
-var server = require('react-dom/server'); // { renderToString } ;
-var router = require('react-router') ;// import { match, RouterContext } from 'react-router';
+let express = require('express');
+let path = require('path');
+let morgan = require('morgan'); // logger
+let bodyParser = require('body-parser');
+let session = require('express-session');
+let fs = require('fs');
+let request = require('request');
+let zlib = require('zlib');
+let app = express();
+let querystring = require('querystring');
+let server = require('react-dom/server'); // { renderToString } ;
+let router = require('react-router') ;// import { match, RouterContext } from 'react-router';
 
 //initialize node backend
 app.set('view engine', 'ejs');
@@ -53,14 +53,13 @@ app.get(BASE_PUBLIC.concat('currency/btce'), function(req, res) {
 });
 
 app.get(BASE_PUBLIC.concat('currency/bitstamp'), function(req, res) {
-    console.log('here!')
     let url_path = BASE_BITSTAMP_URL+'/transactions/btcusd';
     request({
         url: url_path,
         method: 'GET'
     }, function (err, response, body) {
         if(err) return res.status(500).json(err.message);
-        var response_body = JSON.parse(body);
+        let response_body = JSON.parse(body);
         res.status(200);
         res.json(response_body);
     });
