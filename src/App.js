@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Chart from './chart/Chart';
+import Market from './market/Market';
 
 class App extends Component {
   render() {
@@ -11,7 +11,7 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h2>Welcome to LizaBitDynamic</h2>
         </div>
-        <Chart text="example_props"/>
+        <Market />
       </div>
     );
   }

@@ -27,28 +27,47 @@ app.use(session({
   saveUninitialized: true
 }));
 const BASE_BLOCKCHAIN_URL = 'https://blockchain.info/'
+const BASE_BITSTAMP_URL = 'https://www.bitstamp.net/api/v2'
 // APIs
 // select all
 //   nonce = new Date().getTime();
-  // url_request = 'https://s2.bitcoinwisdom.com/period?step=900&symbol=btcebtcusd&mode=simple&nonce='+nonce;
-  // url_request = 'https://s2.bitcoinwisdom.com/depth?symbol=btcebtcusd&nonce='+nonce;
-app.get('/get_btc_test', function(req, res) {
-  params = {
-    'timespan':'20days',
-    'format': 'json'
-  }
-  query_path = querystring.stringify(params)
-  url_path = BASE_BLOCKCHAIN_URL+'charts/market-price?'+query_path;
-  request({
-    url: url_path,
-    method: 'GET'
-  }, function (err, response, body) {
-    if(err) return res.status(500).json(err.message);
-    response_body = JSON.parse(body);
-    res.status(200);
-    res.json(response_body['values']);
-  });
+// url_request = 'https://s2.bitcoinwisdom.com/period?step=900&symbol=btcebtcusd&mode=simple&nonce='+nonce;
+// url_request = 'https://s2.bitcoinwisdom.com/depth?symbol=btcebtcusd&nonce='+nonce;
+app.get('/get_btc_e', function(req, res) {
+    params = {
+        'timespan':'20days',
+        'format': 'json'
+    }
+    query_path = querystring.stringify(params)
+    url_path = BASE_BLOCKCHAIN_URL+'charts/market-price?'+query_path;
+    request({
+        url: url_path,
+        method: 'GET'
+    }, function (err, response, body) {
+        if(err) return res.status(500).json(err.message);
+        response_body = JSON.parse(body);
+        res.status(200);
+        res.json(response_body['values']);
+    });
 });
+
+app.get('/get_bitstamp', function(req, res) {
+    params = {
+    }
+    query_path = querystring.stringify(params)
+
+    url_path = BASE_BITSTAMP_URL+'/transactions/btcusd';
+    request({
+        url: url_path,
+        method: 'GET'
+    }, function (err, response, body) {
+        if(err) return res.status(500).json(err.message);
+        response_body = JSON.parse(body);
+        res.status(200);
+        res.json(response_body);
+    });
+});
+
 
 // all other routes are handled by Angular
 app.get('/*', function(req, res) {

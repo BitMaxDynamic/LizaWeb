@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "axios": "^0.16.1",
     "body-parser": "^1.16.0",
     "bootstrap": "^3.3.7",
     "core-js": "^2.4.1",

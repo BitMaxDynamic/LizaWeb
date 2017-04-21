@@ -3,7 +3,6 @@
  */
 import React from 'react';
 import PropTypes from 'prop-types';
-// import  {LineChart} from 'react-d3-basic';
 import {LineTooltip} from 'react-d3-tooltip';
 
 class Chart extends React.Component {
