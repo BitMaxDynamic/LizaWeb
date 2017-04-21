@@ -19,13 +19,12 @@ class Chart extends React.Component {
     }
 
     componentWillMount(){
-        console.log("debug here before fetches");
+        // console.log("debug here before fetches");
         this.getApiData(this.props.data);
-        console.log("debug here after fetches");
+        // console.log("debug here after fetches");
     }
 
     getApiData(data){
-        console.log(data);
         let self = this;
         axios.get(data)
             .then(function (response) {
@@ -66,18 +65,20 @@ class Chart extends React.Component {
         let width = 1000;
         let height= 500;
         const generalChartData = data_array;
+        const yRange = [1300, 0];
         // const margins = {left: 100, right: 100, top: 50, bottom: 50};
         return (
             <div>
                 <LineTooltip
                     showXGrid={false}
-                    showYGrid={false}
+                    showYGrid={true}
                     title={this.props.title}
                     width={width}
                     height={height}
                     data={generalChartData}
                     chartSeries={chartSeries}
                     x={this.x}
+                    yRange={yRange}
                 />
             </div>
         );
