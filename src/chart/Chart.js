@@ -46,11 +46,12 @@ class Chart extends React.Component {
     getParsedData(data_array, field_x, field_y) {
         let new_data = [];
         for (const currency of data_array){
-            currency['time'] = currency[field_x];
+            const date_time = new Date(currency[field_x]*1000);
+            currency['time'] = date_time;
             currency['total'] = currency[field_y];
             new_data.push(currency);
         }
-        return new_data;
+        return data_array;
     }
 
     getMaxValue(array){
@@ -82,7 +83,7 @@ class Chart extends React.Component {
         let field_y = this.props.field_y;
         const chartSeries = [
                 {
-                    field: field_y,
+                        field: field_y,
                     name: field_y,
                     color: '#ff7f0e',
                     style: {
@@ -95,13 +96,11 @@ class Chart extends React.Component {
         let data_array = this.getParsedData(this.state.data, this.props.field_x, field_y);
         const max_value = this.getMaxValue(data_array);
         const min_value = this.getMinValue(data_array);
-        let width = 700;
-        let height= 300;
-        // let margins = {left: 100, right: 100, top: 50, bottom: 50};
-        // let yDomain = d3.extent(chartData, function(d){ return y(d); });
+        let width = 1000;
+        let height= 500;
+        const xScale = 'time';
         console.log(max_value, min_value);
-        const yRange =[1300, 50];
-        // const margins = {left: 100, right: 100, top: 50, bottom: 50};
+        // rendering the chart
         return (
             <div>
                 <LineTooltip
@@ -113,7 +112,9 @@ class Chart extends React.Component {
                     width={width}
                     height={height}
                     chartSeries={chartSeries}
-                    yRange={yRange}
+                    xScale={xScale}
+                    yRange={[max_value*10*(max_value-min_value), 0]}
+                    y={this.y}
                     x={this.x}
                 />
             </div>
@@ -124,11 +125,11 @@ class Chart extends React.Component {
         return d.time;
     }
     y(d) {
-        return d.total;
+        return d;
     }
 }
 Chart.propTypes = {
-    url: PropTypes.string.isRequired || PropTypes.array.isRequired,
+    url: PropTypes.string.isRequired,
     field_x: PropTypes.string.isRequired,
     field_y: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
