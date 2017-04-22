@@ -20,8 +20,14 @@ class Chart extends React.Component {
 
     componentWillMount(){
         // console.log("debug here before fetches");
-        this.getApiData(this.props.data);
-        // console.log("debug here after fetches");
+        if (!this.props.debug) {
+            this.getApiData(this.props.url);
+            // console.log("debug here after fetches");
+        }
+        else{
+            this.setState({ data: this.props.url});
+        }
+
     }
 
     getApiData(data){
@@ -47,7 +53,32 @@ class Chart extends React.Component {
         return new_data;
     }
 
-    render() {
+    getMaxValue(array){
+        let checkArray = [];
+        for (const currency of array){
+            checkArray.push(currency['total']);
+        }
+        let number= Math.max.apply(Math, checkArray);
+        if (number === Infinity){
+            number = 2000;
+        }
+        return number;
+        }
+
+    getMinValue(array){
+        let checkArray = [];
+        for (const currency of array){
+            checkArray.push(currency['total']);
+        }
+        let number =  Math.min.apply(Math, checkArray);
+        if (isNaN(number)){
+            number = 0;
+        }
+        return number;
+    }
+
+    render(){
+
         let field_y = this.props.field_y;
         const chartSeries = [
                 {
@@ -62,27 +93,32 @@ class Chart extends React.Component {
                 }
             ];
         let data_array = this.getParsedData(this.state.data, this.props.field_x, field_y);
-        let width = 1000;
-        let height= 500;
-        const generalChartData = data_array;
-        const yRange = [1300, 0];
+        const max_value = this.getMaxValue(data_array);
+        const min_value = this.getMinValue(data_array);
+        let width = 700;
+        let height= 300;
+        // let margins = {left: 100, right: 100, top: 50, bottom: 50};
+        // let yDomain = d3.extent(chartData, function(d){ return y(d); });
+        console.log(max_value, min_value);
+        const yRange =[1300, 50];
         // const margins = {left: 100, right: 100, top: 50, bottom: 50};
         return (
             <div>
                 <LineTooltip
+                    key={data_array.toString()}
                     showXGrid={false}
-                    showYGrid={true}
+                    showYGrid={false}
                     title={this.props.title}
+                    data={data_array}
                     width={width}
                     height={height}
-                    data={generalChartData}
                     chartSeries={chartSeries}
-                    x={this.x}
                     yRange={yRange}
+                    x={this.x}
                 />
             </div>
         );
-    }
+    };
 
     x(d){
         return d.time;
@@ -92,7 +128,7 @@ class Chart extends React.Component {
     }
 }
 Chart.propTypes = {
-    data: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired || PropTypes.array.isRequired,
     field_x: PropTypes.string.isRequired,
     field_y: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired
